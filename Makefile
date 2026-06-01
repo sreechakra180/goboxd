@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .PHONY: run run-docker build test clean
 
 run:
@@ -19,3 +20,24 @@ test:
 clean:
 	@echo "Cleaning up..."
 	rm -rf bin/
+=======
+.PHONY: build run test integration lint
+
+COMPOSE ?= docker compose
+TOOLS   := $(COMPOSE) --profile tools run --rm tools
+
+build:
+	$(COMPOSE) build goboxd
+
+run:
+	$(COMPOSE) up goboxd
+
+test:
+	$(TOOLS) go test ./...
+
+integration:
+	$(TOOLS) go test -tags=integration ./tests/...
+
+lint:
+	$(TOOLS) golangci-lint run ./...
+>>>>>>> ea5ab73544b662686ae9797ef36e03b1aced31bc
